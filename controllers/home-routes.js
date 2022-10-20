@@ -43,6 +43,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+    // check for session and redirect to homepage if one exists
     if (req.session.loggedIn) {
         res.redirect('/');
         return;
