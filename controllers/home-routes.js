@@ -33,8 +33,12 @@ router.get('/', (req, res) => {
         const posts = dbPostData.map(post => post.get({ plain: true }));
         // render is usable bc of template engine, we only need to specify which template we want to use ie. 'homepage'
         // pass a single post object into the homepage template
+        // then set up session validation to note if 'loggedIn'
         // to serialize the data object down to what you need, use sequelize get() method (previously done with res.json())
-        res.render('homepage', { posts });
+        res.render('homepage', { 
+            posts,
+            loggedIn: req.session.loggedIn
+        });
     })
     .catch(err => {
         console.log(err);
@@ -89,7 +93,10 @@ router.get('/post/:id', (req, res) => {
             const post = dbPostData.get({ plain: true });
 
             // pass data to template
-            res.render('single-post', { post });
+            res.render('single-post', { 
+                post,
+                loggedIn: req.session.loggedIn
+            });
         })
         .catch(err => {
             console.log(err);
